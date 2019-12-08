@@ -1,0 +1,22 @@
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+pytest = "*"
+pylint = "*"
+mock = "*"
+pytest-cov = "*"
+
+[packages]
+flask = "*"
+numpy = "*"
+torch = "*"
+regex = "*"
+requests = "*"
+tqdm = "*"
+sentencepiece = "*"
+uWSGI = "*"
+
+[requires]
+python_version = "3.6"
