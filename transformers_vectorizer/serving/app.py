@@ -1,3 +1,4 @@
+# pylint: disable=invalid-name,missing-function-docstring
 import os
 
 from flask import Flask, request, jsonify
@@ -20,7 +21,6 @@ def to_vector():
     content = request.get_json(silent=True)
     if not content or "texts" not in content:
         return jsonify({"error": f"body must contains texts list"})
-    print(content)
     texts = content["texts"]
     vectors = vectorizers[INITIAL_VECTORIZER_NAME].to_vectors(texts)
     return jsonify({"vectors": vectors})
@@ -32,5 +32,4 @@ def to_vector_by_name(vectorizer_name):
         content = request.get_json(silent=True)
         vectors = vectorizers[vectorizer_name].to_vectors(content["texts"])
         return jsonify({"vectors": vectors})
-    else:
-        return jsonify({"error": f"model {vectorizer_name} not found"}), 404
+    return jsonify({"error": f"model {vectorizer_name} not found"}), 404

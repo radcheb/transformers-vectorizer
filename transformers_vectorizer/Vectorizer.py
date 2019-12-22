@@ -8,13 +8,13 @@ class Vectorizer:
 
     def __init__(self):
         self.model = None
+        self.tokenizer = None
 
     def load(self):
         """
         Load the model into memory.
         :return:
         """
-        pass
 
     def to_vector(self, text: str) -> np.ndarray:
         """
@@ -22,7 +22,6 @@ class Vectorizer:
         :param text:
         :return:
         """
-        pass
 
     def to_vectors(self, text_list: list) -> list:
         """
@@ -38,5 +37,4 @@ class Vectorizer:
             if isinstance(rs, np.ndarray):
                 rs = [self.to_list(e) for e in rs]
             return rs
-        else:
-            return vector
+        return vector

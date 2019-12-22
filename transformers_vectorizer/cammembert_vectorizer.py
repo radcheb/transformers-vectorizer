@@ -1,9 +1,11 @@
+# pylint: disable=invalid-name,not-callable,no-member
 import torch
+
+from transformers import CamembertTokenizer, CamembertModel
 
 from transformers_vectorizer.Vectorizer import Vectorizer
 
-REPO = 'pytorch/fairseq'
-MODEL = 'camembert.v0'
+MODEL_NAME = 'camembert-base'
 
 
 class CamembertVectorizer(Vectorizer):
@@ -13,9 +15,9 @@ class CamembertVectorizer(Vectorizer):
         Load Camembert model from FAIR repo
         :return:
         """
-        camembert = torch.hub.load(REPO, MODEL)
-        camembert.eval()  # disable dropout (or leave in train mode to finetune)
-        self.model = camembert
+        self.tokenizer = CamembertTokenizer.from_pretrained(MODEL_NAME)
+        self.model = CamembertModel.from_pretrained(MODEL_NAME)
+        self.model.eval()
 
     def to_vector(self, text):
         """
@@ -24,5 +26,7 @@ class CamembertVectorizer(Vectorizer):
         :return:
         """
         with torch.no_grad():
-            tokens = self.model.encode(text)
-            return self.model.extract_features(tokens).numpy().squeeze(0)
+            input_ids = torch.tensor(self.tokenizer.encode(text)).unsqueeze(0)
+            outputs = self.model(input_ids)
+            avg_features = torch.mean(outputs[0], 1).squeeze(0)
+            return avg_features.numpy()
