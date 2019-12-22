@@ -16,7 +16,7 @@ regex = "*"
 requests = "*"
 tqdm = "*"
 sentencepiece = "*"
-uWSGI = "*"
+transformers = "*"
 
 [requires]
 python_version = "3.6"
